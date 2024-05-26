@@ -1,0 +1,22 @@
+import re
+
+def check_password_complexity(password):
+    criteria={
+        "Length(must be greater than 8)":lambda pwd: len(pwd)>=8,
+        "Uppercase Letters":lambda pwd: re.search(r'[A-Z]',pwd) is not None,
+        "Lowercase Letters":lambda pwd: re.search(r'[a-z]',pwd) is not None,
+        "Digit":lambda pwd: re.search(r'\d',pwd)is not None,
+        "Special character":lambda pwd:re.search(r'[!@#$%^&*(),.?":{}<>]',pwd)is not None
+        }
+
+    results={criterion: check(password) for criterion, check in criteria.items()}
+    for criterion ,passed in results.items():
+        print(f"{criterion}:{'Passed' if  passed else 'Failed'}")
+
+    if all(results.values()):
+        print("Overall : Strong password")
+    else:
+        print("Overall: weak password")
+
+password=input("Enter the password ")
+check_password_complexity(password)
